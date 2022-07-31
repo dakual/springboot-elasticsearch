@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/main::head"></head>
+<body>
+    <nav th:replace="fragments/main::navigation"></nav>
+
+    <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+                <div class="col mb-5" th:each="product : ${products}">
+                    <div class="card h-100">
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem" th:if="${product.salePrice}">Sale</div>
+                        <a th:href="@{/product(id=${product.id})}">
+                            <img class="card-img-top" th:src="${product.image}" th:alt="${product.name}" />
+                        </a>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <a th:href="@{/product(id=${product.id})}">
+                                    <h5 class="fw-bolder" th:text="${product.name}">product name</h5>
+                                </a>
+                                <div class="d-flex justify-content-center small text-warning mb-2" th:if="${product.rating}">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                                <span class="text-muted text-decoration-line-through" th:if="${product.salePrice}" th:text="${product.price}">sale price</span>
+                                <span th:text="${product.salePrice} ? ${product.salePrice} : ${product.price}">price</span>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <th:block th:include="fragments/main::footer"></th:block>
+</body>
+</html>
